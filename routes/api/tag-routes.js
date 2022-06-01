@@ -34,20 +34,30 @@ router.get("/:id", (req, res) => {
     });
 });
 
-router
-  .post("/", (req, res) => {
-    // create a new tag
-    Tag.create(req.body);
-  })
-  .then((response) => {
-    res.status(200).json(response);
-  })
-  .catch((error) => {
-    res.status(500).json(error);
-  });
+router.post("/", (req, res) => {
+  // create a new tag
+  Tag.create(req.body)
+    .then((response) => {
+      res.status(200).json(response);
+    })
+    .catch((error) => {
+      res.status(500).json(error);
+    });
+});
 
 router.put("/:id", (req, res) => {
   // update a tag's name by its `id` value
+  Tag.update(req.body, {
+    where: {
+      id: req.params.id,
+    },
+  })
+    .then((tagData) => {
+      res.status(200).json(tagData);
+    })
+    .catch((error) => {
+      res.status(500).json(error);
+    });
 });
 
 router.delete("/:id", (req, res) => {
